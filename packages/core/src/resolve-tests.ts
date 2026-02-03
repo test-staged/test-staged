@@ -31,32 +31,44 @@ function isTestFile(file: string): boolean {
 
 function getTestCandidates(file: string): string[] {
   const ext = path.extname(file);
-  const base = file.slice(0, -ext.length);
   const candidates: string[] = [];
+  
+  const addCandidates = (basePath: string) => {
+      for (const testExt of TEST_EXTENSIONS) {
+        candidates.push(`${basePath}${testExt}${ext}`);
+        if (ext === '.js' || ext === '.jsx') {
+            candidates.push(`${basePath}${testExt}.ts`);
+            candidates.push(`${basePath}${testExt}.tsx`);
+        }
+      }
+  };
 
+  const base = file.slice(0, -ext.length);
+  
   // 1. Same directory: foo.test.ts, foo.spec.ts
-  for (const testExt of TEST_EXTENSIONS) {
-    candidates.push(`${base}${testExt}${ext}`);
-    // Also check for .ts/.tsx if source is .js/.jsx
-    if (ext === '.js' || ext === '.jsx') {
-        candidates.push(`${base}${testExt}.ts`);
-        candidates.push(`${base}${testExt}.tsx`);
-    }
-  }
+  addCandidates(base);
 
   // 2. __tests__ directory: __tests__/foo.test.ts
   const dir = path.dirname(file);
   const name = path.basename(file, ext);
   
-  // Only if __tests__ doesn't already exist in the path (simple check)
   if (!dir.includes('__tests__')) {
-     for (const testExt of TEST_EXTENSIONS) {
-        candidates.push(path.join(dir, '__tests__', `${name}${testExt}${ext}`));
-        if (ext === '.js' || ext === '.jsx') {
-            candidates.push(path.join(dir, '__tests__', `${name}${testExt}.ts`));
-            candidates.push(path.join(dir, '__tests__', `${name}${testExt}.tsx`));
-        }
-     }
+     addCandidates(path.join(dir, '__tests__', name));
+  }
+
+  // 3. Mirror directories (test/, tests/)
+  const testDirs = ['test', 'tests'];
+  for (const testDir of testDirs) {
+      // src/foo.ts -> test/foo.test.ts
+      if (file.startsWith(`src${path.sep}`)) {
+          const relativePath = file.slice(4); // remove src/
+          const relativeBase = relativePath.slice(0, -ext.length);
+          addCandidates(path.join(testDir, relativeBase));
+      }
+      
+      // foo.ts -> test/foo.test.ts
+      // lib/foo.ts -> test/lib/foo.test.ts
+      addCandidates(path.join(testDir, base));
   }
 
   return candidates;
