@@ -1,5 +1,11 @@
 # test-staged
 
+## 3.0.0
+
+### Major Changes
+
+- testing bump
+
 ## 2.0.0
 
 ### Major Changes
