@@ -35,10 +35,20 @@ function getTestCandidates(file: string): string[] {
   
   const addCandidates = (basePath: string) => {
       for (const testExt of TEST_EXTENSIONS) {
+        // Default: same extension (e.g. .ts -> .spec.ts)
         candidates.push(`${basePath}${testExt}${ext}`);
-        if (ext === '.js' || ext === '.jsx') {
+        
+        // Cross-extension checks:
+        // If the file is a source file (script, component, template), check for standard test extensions
+        // This covers:
+        // - JS/TS: .js, .jsx, .mjs, .cjs, .ts, .tsx
+        // - Frameworks: .vue, .svelte
+        // - Templates: .html (Angular)
+        if (['.js', '.jsx', '.mjs', '.cjs', '.ts', '.tsx', '.vue', '.svelte', '.html'].includes(ext)) {
             candidates.push(`${basePath}${testExt}.ts`);
             candidates.push(`${basePath}${testExt}.tsx`);
+            candidates.push(`${basePath}${testExt}.js`);
+            candidates.push(`${basePath}${testExt}.jsx`);
         }
       }
   };

@@ -1,6 +1,6 @@
 {
   "name": "@test-staged/detect-runner",
-  "version": "2.0.0",
+  "version": "1.1.4",
   "description": "Test runner detector for test-staged",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

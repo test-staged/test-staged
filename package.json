@@ -7,7 +7,7 @@
     "build": "pnpm -r run build",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && pnpm -r publish --access public --no-git-checks"
   },
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {

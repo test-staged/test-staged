@@ -55,7 +55,7 @@ export async function run(options: Options = {}) {
   }
 
   // 3. Filter by Globs (relative to CWD)
-  const globs = options.globs || ['**/*.{js,jsx,ts,tsx,mjs,cjs}'];
+  const globs = options.globs || ['**/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}'];
   
   // micromatch expects strings. We can match against absolute paths if globs are absolute, 
   // or match relative paths. 
