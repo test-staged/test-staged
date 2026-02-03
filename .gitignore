@@ -6,3 +6,5 @@ dist
 **/dist
 playground/**/package-lock.json
 .npmrc
+
+docs/.vitepress/cache
