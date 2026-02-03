@@ -30,6 +30,7 @@
     "@test-staged/detect-pm": "workspace:*",
     "@test-staged/detect-runner": "workspace:*",
     "execa": "^9.5.2",
+    "lilconfig": "^3.1.3",
     "micromatch": "^4.0.8",
     "simple-git": "^3.27.0"
   },

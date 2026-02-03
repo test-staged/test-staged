@@ -6,6 +6,7 @@ import { detectTestRunner } from '@test-staged/detect-runner';
 import { getAdapter } from '@test-staged/adapters';
 import { execa } from 'execa';
 import { resolveTestFiles } from './resolve-tests';
+import { loadConfig } from './config';
 
 export { resolveTestFiles } from './resolve-tests';
 export interface Options {
@@ -71,8 +72,9 @@ export async function run(options: Options = {}) {
   console.log(`Found ${matchedRelative.length} staged files to test.`);
 
   // 4. Detect PM and Runner
+  const config = await loadConfig(cwd);
   const pm = await getPackageManager(cwd);
-  const runner = await detectTestRunner(cwd);
+  const runner = config.runner || await detectTestRunner(cwd);
 
   if (runner === 'unknown') {
     console.error('Could not detect a supported test runner (jest, vitest).');
@@ -85,9 +87,17 @@ export async function run(options: Options = {}) {
     process.exit(1);
   }
 
-  // Resolve test files if the adapter doesn't support related tests natively
+  // Check config mode for runner
+  let mode: 'related' | 'match' = 'related';
+  if (runner === 'jest' && config.jest?.mode) {
+    mode = config.jest.mode;
+  } else if (runner === 'vitest' && config.vitest?.mode) {
+    mode = config.vitest.mode;
+  }
+
+  // Resolve test files if the adapter doesn't support related tests natively OR if mode is 'match'
   let filesToRun = matchedRelative;
-  if (!adapter.supportsRelated) {
+  if (!adapter.supportsRelated || mode === 'match') {
     filesToRun = resolveTestFiles(matchedRelative, cwd);
     if (filesToRun.length === 0) {
       console.log('No related test files found for staged files.');
@@ -97,7 +107,7 @@ export async function run(options: Options = {}) {
 
   // 5. Build Command
   // Pass relative paths to the runner (cleaner output usually)
-  const testArgs = adapter.getCommand(filesToRun);
+  const testArgs = adapter.getCommand(filesToRun, { mode });
   
   let execCmd = testArgs[0];
   let execArgs = testArgs.slice(1);
