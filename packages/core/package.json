@@ -1,0 +1,28 @@
+{
+  "name": "@test-staged/core",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@test-staged/adapters": "workspace:*",
+    "@test-staged/detect-pm": "workspace:*",
+    "@test-staged/detect-runner": "workspace:*",
+    "execa": "^9.5.2",
+    "micromatch": "^4.0.8",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "@types/micromatch": "^4.0.9"
+  }
+}

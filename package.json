@@ -1,0 +1,23 @@
+{
+  "name": "test-staged",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.2",
+  "devDependencies": {
+    "@types/node": "^25.2.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@test-staged/core": "workspace:*",
+    "cac": "^6.7.14",
+    "picocolors": "^1.1.1"
+  }
+}

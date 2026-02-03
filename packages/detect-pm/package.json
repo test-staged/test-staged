@@ -1,0 +1,12 @@
+{
+  "name": "@test-staged/detect-pm",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm && tsc src/index.ts --emitDeclarationOnly --declaration --outDir dist --esModuleInterop --skipLibCheck --target ES2020 --moduleResolution node"
+  },
+  "dependencies": {
+    "package-manager-detector": "^0.2.8"
+  }
+}
