@@ -54,8 +54,22 @@ export async function run(options: Options = {}) {
     return;
   }
 
+  // 4. Detect PM and Runner
+  const config = await loadConfig(cwd);
+
   // 3. Filter by Globs (relative to CWD)
-  const globs = options.globs || ['**/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}'];
+  const defaultGlobs = ['**/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}'];
+  
+  let globs = defaultGlobs;
+  if (options.globs) {
+    globs = options.globs;
+  } else if (config.patterns) {
+    if (config.mergePatterns) {
+      globs = [...defaultGlobs, ...config.patterns];
+    } else {
+      globs = config.patterns;
+    }
+  }
   
   // micromatch expects strings. We can match against absolute paths if globs are absolute, 
   // or match relative paths. 
@@ -71,8 +85,6 @@ export async function run(options: Options = {}) {
 
   console.log(`Found ${matchedRelative.length} staged files to test.`);
 
-  // 4. Detect PM and Runner
-  const config = await loadConfig(cwd);
   const pm = await getPackageManager(cwd);
   const runner = config.runner || await detectTestRunner(cwd);
 

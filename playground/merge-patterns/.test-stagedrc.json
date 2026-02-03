@@ -1,0 +1,4 @@
+{
+  "patterns": ["**/*.foo.js"],
+  "mergePatterns": true
+}

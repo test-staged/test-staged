@@ -1,0 +1,10 @@
+{
+  "name": "playground-custom-globs",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "echo 'Running tests...'"
+  },
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}

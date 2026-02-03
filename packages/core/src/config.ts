@@ -7,6 +7,19 @@ export interface TestStagedConfig {
   runner?: 'jest' | 'vitest' | 'mocha' | 'ava';
   
   /**
+   * Custom glob patterns to match staged files against.
+   * Defaults to ['**\/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}']
+   */
+  patterns?: string[];
+  
+  /**
+   * Whether to merge the custom patterns with the default patterns.
+   * If true, custom patterns are added to the defaults.
+   * If false (default), custom patterns replace the defaults.
+   */
+  mergePatterns?: boolean;
+
+  /**
    * Configuration for Jest.
    */
   jest?: {

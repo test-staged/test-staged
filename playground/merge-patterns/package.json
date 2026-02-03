@@ -1,0 +1,10 @@
+{
+  "name": "playground-merge-patterns",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
