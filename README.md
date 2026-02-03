@@ -99,20 +99,28 @@ Now, every time you commit, `test-staged` will run tests related to your changes
 }
 ```
 
-### Why use "match" mode?
+## Development
 
-By default, Jest and Vitest use their "related" mode, which analyzes your dependency graph to find *any* test that imports the changed file. This is very safe but can be slow or run too many tests in large codebases.
+### Releasing
 
-If you prefer to strictly run only the test file corresponding to the changed file (e.g., if you change `Button.tsx`, only run `Button.test.tsx`), use `"mode": "match"`.
+This project uses [Changesets](https://github.com/changesets/changesets) for versioning and publishing.
 
-## How it works
+1. **Create a changeset**: When you make changes, run:
+   ```bash
+   pnpm changeset
+   ```
+   Select the packages you changed and the bump type (major/minor/patch). This will create a markdown file in `.changeset/`.
 
-1. **Detects Staged Files**: Gets the list of files currently staged in git.
-2. **Resolves Tests**:
-   - For **Jest/Vitest**, it passes the staged files directly to the runner's "related" mode, which uses the dependency graph to find affected tests.
-   - For **Mocha/Ava**, it scans for matching test files (e.g. `Component.ts` -> `Component.test.ts`).
-3. **Runs Tests**: Executes the test runner with the appropriate arguments.
+2. **Commit**: Commit the changeset file along with your code changes.
 
-## License
+3. **Version Packages**: When ready to release, run:
+   ```bash
+   pnpm version-packages
+   ```
+   This will consume the changesets, bump versions in `package.json`, and update `CHANGELOG.md`.
 
-MIT
+4. **Publish**: Push the changes and run:
+   ```bash
+   pnpm release
+   ```
+   This will build the project and publish packages to npm.
