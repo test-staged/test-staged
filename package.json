@@ -1,14 +1,14 @@
 {
   "name": "test-staged",
   "version": "1.0.0",
-  "description": "",
+  "description": "Test your staged files ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Alan Schio @schirrel <schirreltechnology@gmail.com>",
+  "license": "MIT",
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {
     "@types/node": "^25.2.0",
@@ -19,5 +19,13 @@
     "@test-staged/core": "workspace:*",
     "cac": "^6.7.14",
     "picocolors": "^1.1.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/test-staged/test-staged.git"
+  },
+  "bugs": {
+    "url": "https://github.com/test-staged/test-staged/issues"
+  },
+  "homepage": "https://github.com/test-staged/test-staged#readme"
 }

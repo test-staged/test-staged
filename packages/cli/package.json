@@ -1,12 +1,35 @@
 {
   "name": "test-staged",
   "version": "0.0.1",
+  "description": "Run tests for your staged files. Zero config.",
   "bin": {
     "test-staged": "dist/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
+  "keywords": [
+    "test",
+    "staged",
+    "git",
+    "pre-commit",
+    "jest",
+    "vitest",
+    "mocha",
+    "ava",
+    "testing",
+    "automation"
+  ],
+  "author": "Alan Schio",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/test-staged/test-staged.git"
+  },
+  "bugs": {
+    "url": "https://github.com/test-staged/test-staged/issues"
+  },
+  "homepage": "https://github.com/test-staged/test-staged#readme",
   "dependencies": {
     "@test-staged/core": "workspace:*",
     "cac": "^6.7.14",
