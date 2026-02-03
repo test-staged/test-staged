@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/test-staged/test-staged/issues"
   },
-  "homepage": "https://github.com/test-staged/test-staged#readme"
+  "homepage": "https://github.com/test-staged/test-staged#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }

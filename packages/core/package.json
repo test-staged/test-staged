@@ -25,6 +25,9 @@
     "url": "https://github.com/test-staged/test-staged/issues"
   },
   "homepage": "https://github.com/test-staged/test-staged#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@test-staged/adapters": "workspace:*",
     "@test-staged/detect-pm": "workspace:*",

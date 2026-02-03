@@ -17,6 +17,9 @@
     "url": "https://github.com/test-staged/test-staged/issues"
   },
   "homepage": "https://github.com/test-staged/test-staged#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "package-manager-detector": "^0.2.8"
   }
