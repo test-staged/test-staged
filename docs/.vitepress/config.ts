@@ -8,7 +8,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'GitHub', link: 'https://github.com/alan-schio/test-staged' }
+      { text: 'GitHub', link: 'https://github.com/test-staged/test-staged' }
     ],
 
     sidebar: [
@@ -25,7 +25,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/alan-schio/test-staged' }
+      { icon: 'github', link: 'https://github.com/test-staged/test-staged' }
     ],
 
     footer: {
