@@ -1,6 +1,6 @@
 {
   "name": "test-staged",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Run tests for your staged files. Zero config.",
   "bin": {
     "test-staged": "dist/index.js"
