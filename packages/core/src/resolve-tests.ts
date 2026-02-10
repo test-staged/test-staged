@@ -1,20 +1,24 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const TEST_EXTENSIONS = ['.test', '.spec'];
+const DEFAULT_TEST_EXTENSIONS = ['.test', '.spec'];
 
-export function resolveTestFiles(files: string[], cwd: string): string[] {
+export function resolveTestFiles(files: string[], cwd: string, extensions?: string[]): string[] {
+  const testExtensions = extensions 
+    ? Array.from(new Set([...DEFAULT_TEST_EXTENSIONS, ...extensions]))
+    : DEFAULT_TEST_EXTENSIONS;
+
   const testFiles = new Set<string>();
 
   for (const file of files) {
     // If the file itself looks like a test file, keep it
-    if (isTestFile(file)) {
+    if (isTestFile(file, testExtensions)) {
       testFiles.add(file);
       continue;
     }
 
     // Otherwise try to find related test files
-    const candidates = getTestCandidates(file);
+    const candidates = getTestCandidates(file, testExtensions);
     for (const candidate of candidates) {
       if (fs.existsSync(path.resolve(cwd, candidate))) {
         testFiles.add(candidate);
@@ -25,16 +29,18 @@ export function resolveTestFiles(files: string[], cwd: string): string[] {
   return Array.from(testFiles);
 }
 
-function isTestFile(file: string): boolean {
-  return TEST_EXTENSIONS.some(ext => file.includes(ext));
+function isTestFile(file: string, testExtensions: string[]): boolean {
+  const ext = path.extname(file);
+  const stem = path.basename(file, ext);
+  return testExtensions.some(testExt => stem.endsWith(testExt));
 }
 
-function getTestCandidates(file: string): string[] {
+function getTestCandidates(file: string, testExtensions: string[]): string[] {
   const ext = path.extname(file);
   const candidates: string[] = [];
   
   const addCandidates = (basePath: string) => {
-      for (const testExt of TEST_EXTENSIONS) {
+      for (const testExt of testExtensions) {
         // Default: same extension (e.g. .ts -> .spec.ts)
         candidates.push(`${basePath}${testExt}${ext}`);
         

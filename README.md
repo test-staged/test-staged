@@ -83,6 +83,10 @@ Now, every time you commit, `test-staged` will run tests related to your changes
   // Force a specific runner (optional)
   "runner": "jest",
 
+  // Custom test extensions (optional)
+  // Defaults to [".test", ".spec"]
+  "testExtensions": [".test", ".spec", ".mytest"],
+
   // Jest configuration
   "jest": {
     // "related" (default): Uses `jest --findRelatedTests`.

@@ -13,10 +13,16 @@ interface TestStagedConfig {
   runner?: 'jest' | 'vitest' | 'mocha' | 'ava';
 
   /**
-   * Custom file patterns to match staged files against.
-   * Defaults to ['**/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}']
+   * Custom glob patterns to match staged files against.
+   * Defaults to ['**\/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}']
    */
   patterns?: string[];
+
+  /**
+   * Custom test file extensions.
+   * Defaults to ['.test', '.spec']
+   */
+  testExtensions?: string[];
 
   /**
    * Whether to merge custom patterns with defaults.

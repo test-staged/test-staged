@@ -11,6 +11,12 @@ export interface TestStagedConfig {
    * Defaults to ['**\/*.{js,jsx,ts,tsx,mjs,cjs,vue,svelte,html}']
    */
   patterns?: string[];
+
+  /**
+   * Custom test file extensions.
+   * Defaults to ['.test', '.spec']
+   */
+  testExtensions?: string[];
   
   /**
    * Whether to merge the custom patterns with the default patterns.

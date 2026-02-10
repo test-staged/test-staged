@@ -110,7 +110,7 @@ export async function run(options: Options = {}) {
   // Resolve test files if the adapter doesn't support related tests natively OR if mode is 'match'
   let filesToRun = matchedRelative;
   if (!adapter.supportsRelated || mode === 'match') {
-    filesToRun = resolveTestFiles(matchedRelative, cwd);
+    filesToRun = resolveTestFiles(matchedRelative, cwd, config.testExtensions);
     if (filesToRun.length === 0) {
       console.log('No related test files found for staged files.');
       return;
