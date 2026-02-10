@@ -1,11 +1,11 @@
 {
   "name": "@test-staged/detect-pm",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "Package manager detector for test-staged",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm && tsc src/index.ts --emitDeclarationOnly --declaration --outDir dist --esModuleInterop --skipLibCheck --target ES2020 --moduleResolution node"
+    "build": "tsup src/index.ts --format cjs,esm && tsc src/index.ts --emitDeclarationOnly --declaration --outDir dist --esModuleInterop --skipLibCheck --target ES2020 --module esnext --moduleResolution node"
   },
   "author": "Alan Schio",
   "license": "MIT",

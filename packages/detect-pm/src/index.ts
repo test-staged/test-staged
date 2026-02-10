@@ -1,9 +1,11 @@
-import { detect } from 'package-manager-detector/detect';
-import { resolveCommand } from 'package-manager-detector/commands';
-
 export async function getPackageManager(cwd: string = process.cwd()) {
+  const { detect } = await import('package-manager-detector/detect');
   const pm = await detect({ cwd });
   return pm;
 }
 
-export { resolveCommand };
+export async function resolveCommand(...args: any[]) {
+  const { resolveCommand } = await import('package-manager-detector/commands');
+  // @ts-ignore
+  return resolveCommand(...args);
+}
