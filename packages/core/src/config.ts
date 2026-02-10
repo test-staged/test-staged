@@ -26,26 +26,20 @@ export interface TestStagedConfig {
   mergePatterns?: boolean;
 
   /**
+   * 'related': Use native "related tests" feature if available (default).
+   * 'match': Map staged files to test files (e.g. foo.ts -> foo.test.ts) and run them directly.
+   */
+  mode?: 'related' | 'match';
+
+  /**
    * Configuration for Jest.
    */
-  jest?: {
-    /**
-     * 'related': Use `jest --findRelatedTests` (default).
-     * 'match': Map staged files to test files (e.g. foo.ts -> foo.test.ts) and run them directly.
-     */
-    mode?: 'related' | 'match';
-  };
+  jest?: Record<string, any>;
 
   /**
    * Configuration for Vitest.
    */
-  vitest?: {
-    /**
-     * 'related': Use `vitest related` (default).
-     * 'match': Map staged files to test files and run them directly.
-     */
-    mode?: 'related' | 'match';
-  };
+  vitest?: Record<string, any>;
 }
 
 export async function loadConfig(cwd: string): Promise<TestStagedConfig> {

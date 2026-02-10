@@ -99,12 +99,13 @@ export async function run(options: Options = {}) {
     process.exit(1);
   }
 
-  // Check config mode for runner
-  let mode: 'related' | 'match' = 'related';
-  if (runner === 'jest' && config.jest?.mode) {
-    mode = config.jest.mode;
-  } else if (runner === 'vitest' && config.vitest?.mode) {
-    mode = config.vitest.mode;
+  // Check config mode
+  let mode: 'related' | 'match' = config.mode || 'related';
+  
+  // Warn if 'related' mode is requested but not supported by the runner
+  if (mode === 'related' && !adapter.supportsRelated) {
+    console.warn(`[test-staged] Warning: Runner '${runner}' does not support 'related' mode. Falling back to 'match' mode.`);
+    mode = 'match';
   }
 
   // Resolve test files if the adapter doesn't support related tests natively OR if mode is 'match'

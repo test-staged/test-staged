@@ -15,9 +15,11 @@ export default defineConfig({
       {
         text: 'Guide',
         items: [
+          { text: 'Why test-staged?', link: '/guide/why' },
           { text: 'Getting Started', link: '/guide/getting-started' },
           { text: 'Supported Runners', link: '/guide/runners' },
-          { text: 'Configuration', link: '/guide/configuration' }
+          { text: 'Configuration', link: '/guide/configuration' },
+          { text: 'Troubleshooting', link: '/guide/troubleshooting' }
         ]
       }
     ],

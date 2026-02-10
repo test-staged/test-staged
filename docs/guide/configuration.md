@@ -1,6 +1,18 @@
 # Configuration
 
-`test-staged` is zero-config by default, but you can customize its behavior using a configuration file (e.g., `.test-stagedrc.json`, `test-staged.config.js`) or a `test-staged` property in `package.json`.
+`test-staged` is zero-config by default, but you can customize its behavior using a configuration file.
+
+## Configuration Files
+
+`test-staged` supports the following configuration files (searched in order):
+
+1. `package.json` (under `test-staged` key)
+2. `.test-stagedrc`
+3. `.test-stagedrc.json`
+4. `.test-stagedrc.js`
+5. `.test-stagedrc.cjs`
+6. `test-staged.config.js`
+7. `test-staged.config.cjs`
 
 ## Options
 
@@ -33,26 +45,20 @@ interface TestStagedConfig {
   mergePatterns?: boolean;
 
   /**
+   * 'related': Use native "related tests" feature if available (default).
+   * 'match': Map staged files to test files (e.g. foo.ts -> foo.test.ts) and run them directly.
+   */
+  mode?: 'related' | 'match';
+
+  /**
    * Jest-specific configuration
    */
-  jest?: {
-    /**
-     * "related" (default): Uses `jest --findRelatedTests`.
-     * "match": Manually resolves test files and runs them.
-     */
-    mode?: 'related' | 'match';
-  };
+  jest?: Record<string, any>;
 
   /**
    * Vitest-specific configuration
    */
-  vitest?: {
-    /**
-     * "related" (default): Uses `vitest related`.
-     * "match": Manually resolves test files and runs them.
-     */
-    mode?: 'related' | 'match';
-  };
+  vitest?: Record<string, any>;
 }
 ```
 
@@ -65,9 +71,7 @@ interface TestStagedConfig {
 ```json
 {
   "runner": "jest",
-  "jest": {
-    "mode": "match"
-  },
+  "mode": "match",
   "patterns": ["**/*.custom.js"],
   "mergePatterns": true
 }

@@ -42,3 +42,20 @@ npx test-staged
    ```
 
 Now, every time you commit, `test-staged` will run tests related to your changes. If tests fail, the commit is blocked.
+
+### Command Line Flags
+
+```bash
+Usage: test-staged [globs] [options]
+
+Options:
+  --cwd <cwd>   Current working directory
+  -h, --help    Display help
+  -v, --version Display version
+```
+
+You can pass glob patterns as arguments to override the configuration:
+
+```bash
+npx test-staged "**/*.ts" "!**/*.test.ts"
+```
