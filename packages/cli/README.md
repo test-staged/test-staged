@@ -118,7 +118,7 @@ npx test-staged "**/*.ts" "!**/*.test.ts"
 
   // Custom test extensions (optional)
   // Defaults to [".test", ".spec"]
-  "testExtensions": [".test", ".spec", ".mytest"]
+  "testExtensions": [".test", ".spec", ".mytest", "E2E", "Test", "Unit"]
 }
 ```
 

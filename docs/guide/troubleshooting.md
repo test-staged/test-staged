@@ -16,9 +16,10 @@ If your test files are not being picked up, ensure your `testExtensions` are con
 
 ```json
 {
-  "testExtensions": [".test.ts", ".spec.ts", "Test.ts"]
+  "testExtensions": [".test", ".spec", "E2E", "Test", "Unit"]
 }
 ```
+> Example: For `MyFile.ts`, `MyFileE2E.ts` or `MyFileTest.ts` or `MyFileUnit.ts` will be considered test files, where the file does not have a `.type.extension`
 
 ## "Related" mode not supported
 
