@@ -1,6 +1,6 @@
 {
   "name": "@test-staged/detect-pm",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "Package manager detector for test-staged",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
