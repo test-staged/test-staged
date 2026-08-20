@@ -1,7 +1,7 @@
 {
   "name": "@test-staged/monorepo",
   "private": true,
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "Test your staged files - Monorepo Root",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
