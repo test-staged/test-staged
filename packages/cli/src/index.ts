@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import cac from 'cac';
 import pc from 'picocolors';
 import { run } from '@test-staged/core';

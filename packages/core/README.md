@@ -16,7 +16,7 @@ This package contains the main execution engine for `test-staged`. It orchestrat
 This package is typically consumed by the CLI (`test-staged` package), but can be used programmatically.
 
 ```ts
-import { testStaged } from '@test-staged/core';
+import { run as testStaged } from '@test-staged/core';
 
 await testStaged({
   cwd: process.cwd(),
