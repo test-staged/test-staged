@@ -23,7 +23,7 @@ permissions:
   contents: write
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: '22'
 
 jobs:
   release:
@@ -39,14 +39,20 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install root dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Configure git
         run: |
@@ -55,23 +61,23 @@ jobs:
 
       - name: Run release (dry run)
         if: ${{ inputs.dry_run == true }}
-        run: npm run release:dry
+        run: pnpm run release:dry
 
       - name: Run release — patch
         if: ${{ inputs.dry_run == false && inputs.release_type == 'patch' }}
-        run: npm run release:patch
+        run: pnpm run release:patch
 
       - name: Run release — minor
         if: ${{ inputs.dry_run == false && inputs.release_type == 'minor' }}
-        run: npm run release:minor
+        run: pnpm run release:minor
 
       - name: Run release — major
         if: ${{ inputs.dry_run == false && inputs.release_type == 'major' }}
-        run: npm run release:major
+        run: pnpm run release:major
 
       - name: Run release — auto
         if: ${{ inputs.dry_run == false && inputs.release_type == 'auto' }}
-        run: npm run release
+        run: pnpm run release
 
       - name: Push commit and tag
         if: ${{ inputs.dry_run == false }}
