@@ -8,10 +8,15 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "copy-readme": "rm packages/cli/README.md && cp README.md packages/cli/README.md",
-    "release": "pnpm copy-readme && pnpm build && pnpm -r publish --access public --no-git-checks"
+    "release:minor": "commit-and-tag-version --release-as minor",
+    "release:major": "commit-and-tag-version --release-as major",
+    "release:patch": "commit-and-tag-version --release-as patch",
+    "release:dry": "commit-and-tag-version --dry-run",
+    "release": "pnpm copy-readme && pnpm build && commit-and-tag-version && pnpm -r publish --access public --no-git-checks"
   },
   "packageManager": "pnpm@10.29.2",
   "devDependencies": {
+    "commit-and-tag-version": "^12.7.0",
     "@changesets/cli": "^2.29.8",
     "@types/node": "^25.2.3",
     "tsup": "^8.5.1",

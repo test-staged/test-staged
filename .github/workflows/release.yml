@@ -1,0 +1,135 @@
+name: Release - Version Bump
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Tipo de release'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - auto
+      dry_run:
+        description: 'Dry run (não faz commit nem push)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HUSKY: '0'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run release (dry run)
+        if: ${{ inputs.dry_run == true }}
+        run: npm run release:dry
+
+      - name: Run release — patch
+        if: ${{ inputs.dry_run == false && inputs.release_type == 'patch' }}
+        run: npm run release:patch
+
+      - name: Run release — minor
+        if: ${{ inputs.dry_run == false && inputs.release_type == 'minor' }}
+        run: npm run release:minor
+
+      - name: Run release — major
+        if: ${{ inputs.dry_run == false && inputs.release_type == 'major' }}
+        run: npm run release:major
+
+      - name: Run release — auto
+        if: ${{ inputs.dry_run == false && inputs.release_type == 'auto' }}
+        run: npm run release
+
+      - name: Push commit and tag
+        if: ${{ inputs.dry_run == false }}
+        run: git push --follow-tags origin HEAD:${{ github.ref_name }}
+
+      - name: Collect release metadata
+        id: release_metadata
+        if: ${{ inputs.dry_run == false }}
+        run: |
+          TAG_NAME="$(git tag --points-at HEAD | head -n 1)"
+          if [ -z "$TAG_NAME" ]; then
+            echo "Error: No tag found on current release commit." >&2
+            exit 1
+          fi
+          VERSION="${TAG_NAME#v}"
+          RELEASE_NOTES_FILE="/tmp/release-notes.md"
+          CHANGELOG_FILE="CHANGELOG.md"
+
+          if [ ! -f "$CHANGELOG_FILE" ]; then
+            echo "Error: $CHANGELOG_FILE file not found." >&2
+            exit 1
+          fi
+
+          awk -v version="$VERSION" '
+            BEGIN {
+              pattern1 = "^## \\[" version "\\]([[:space:]]|\\(|-|$)"
+              pattern2 = "^## " version "([[:space:]]|\\(|-|$)"
+              found = 0
+            }
+            {
+              if ($0 ~ pattern1 || $0 ~ pattern2) {
+                found = 1
+                next
+              }
+              if (found && $0 ~ /^## /) {
+                exit
+              }
+              if (found) {
+                print
+              }
+            }
+          ' "$CHANGELOG_FILE" > "$RELEASE_NOTES_FILE"
+
+          if [ ! -s "$RELEASE_NOTES_FILE" ]; then
+            {
+              echo "## $TAG_NAME"
+              echo
+              echo "⚠️ Warning: Version section not found in $CHANGELOG_FILE."
+            } > "$RELEASE_NOTES_FILE"
+          fi
+
+          echo "tag_name=$TAG_NAME" >> "$GITHUB_OUTPUT"
+          echo "release_notes_file=$RELEASE_NOTES_FILE" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        if: ${{ inputs.dry_run == false }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release_metadata.outputs.tag_name }}
+          name: ${{ steps.release_metadata.outputs.tag_name }}
+          body_path: ${{ steps.release_metadata.outputs.release_notes_file }}
