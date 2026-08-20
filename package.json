@@ -8,10 +8,9 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "copy-readme": "rm packages/cli/README.md && cp README.md packages/cli/README.md",
-    "release:minor": "commit-and-tag-version --release-as minor",
-    "release:major": "commit-and-tag-version --release-as major",
-    "release:patch": "commit-and-tag-version --release-as patch",
-    "release:dry": "commit-and-tag-version --dry-run",
+    "release:minor": "pnpm -r exec npm version minor --no-git-tag-version && commit-and-tag-version --release-as minor",
+    "release:major": "pnpm -r exec npm version major --no-git-tag-version && commit-and-tag-version --release-as major",
+    "release:patch": "pnpm -r exec npm version patch --no-git-tag-version && commit-and-tag-version --release-as patch",
     "release": "pnpm copy-readme && pnpm build && commit-and-tag-version && pnpm -r publish --access public --no-git-checks"
   },
   "packageManager": "pnpm@10.29.2",

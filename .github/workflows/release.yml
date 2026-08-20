@@ -13,11 +13,6 @@ on:
           - minor
           - major
           - auto
-      dry_run:
-        description: 'Dry run (não faz commit nem push)'
-        required: false
-        default: false
-        type: boolean
 
 permissions:
   contents: write
@@ -57,33 +52,28 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Run release (dry run)
-        if: ${{ inputs.dry_run == true }}
-        run: pnpm run release:dry
 
       - name: Run release — patch
-        if: ${{ inputs.dry_run == false && inputs.release_type == 'patch' }}
+        if: ${{ inputs.release_type == 'patch' }}
         run: pnpm run release:patch
 
       - name: Run release — minor
-        if: ${{ inputs.dry_run == false && inputs.release_type == 'minor' }}
+        if: ${{ inputs.release_type == 'minor' }}
         run: pnpm run release:minor
 
       - name: Run release — major
-        if: ${{ inputs.dry_run == false && inputs.release_type == 'major' }}
+        if: ${{ inputs.release_type == 'major' }}
         run: pnpm run release:major
 
       - name: Run release — auto
-        if: ${{ inputs.dry_run == false && inputs.release_type == 'auto' }}
+        if: ${{ inputs.release_type == 'auto' }}
         run: pnpm run release
 
       - name: Push commit and tag
-        if: ${{ inputs.dry_run == false }}
         run: git push --follow-tags origin HEAD:${{ github.ref_name }}
 
       - name: Collect release metadata
         id: release_metadata
-        if: ${{ inputs.dry_run == false }}
         run: |
           TAG_NAME="$(git tag --points-at HEAD | head -n 1)"
           if [ -z "$TAG_NAME" ]; then
@@ -131,7 +121,6 @@ jobs:
           echo "release_notes_file=$RELEASE_NOTES_FILE" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
-        if: ${{ inputs.dry_run == false }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.release_metadata.outputs.tag_name }}
