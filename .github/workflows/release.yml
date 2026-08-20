@@ -70,7 +70,9 @@ jobs:
         run: pnpm run release
 
       - name: Push commit and tag
-        run: git push --follow-tags origin HEAD:${{ github.ref_name }}
+        run: |
+          git push origin HEAD:${{ github.ref_name }}
+          git push --tags
 
       - name: Collect release metadata
         id: release_metadata
