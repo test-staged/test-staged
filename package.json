@@ -1,6 +1,7 @@
 {
   "name": "@test-staged/monorepo",
   "private": true,
+  "version": "1.1.11",
   "description": "Test your staged files - Monorepo Root",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -8,9 +9,9 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "copy-readme": "rm packages/cli/README.md && cp README.md packages/cli/README.md",
-    "release:minor": "pnpm -r exec npm version minor --no-git-tag-version && commit-and-tag-version --release-as minor",
-    "release:major": "pnpm -r exec npm version major --no-git-tag-version && commit-and-tag-version --release-as major",
-    "release:patch": "pnpm -r exec npm version patch --no-git-tag-version && commit-and-tag-version --release-as patch",
+    "release:minor": "pnpm -r exec npm version minor && commit-and-tag-version --release-as minor && git add . && git commit  --amend --no-edit",
+    "release:major": "pnpm -r exec npm version major && commit-and-tag-version --release-as major && git add . && git commit  --amend --no-edit ",
+    "release:patch": "pnpm -r exec npm version patch && commit-and-tag-version --release-as patch && git add . && git commit  --amend --no-edit",
     "release": "pnpm copy-readme && pnpm build && commit-and-tag-version && pnpm -r publish --access public --no-git-checks"
   },
   "packageManager": "pnpm@10.29.2",
@@ -28,6 +29,5 @@
   "bugs": {
     "url": "https://github.com/test-staged/test-staged/issues"
   },
-  "homepage": "https://github.com/test-staged/test-staged#readme",
-  "version": "1.0.1"
+  "homepage": "https://github.com/test-staged/test-staged#readme"
 }
