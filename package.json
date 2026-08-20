@@ -9,9 +9,9 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "copy-readme": "rm packages/cli/README.md && cp README.md packages/cli/README.md",
-    "release:minor": "pnpm -r exec npm version minor && commit-and-tag-version --release-as minor && git add . && git commit  --amend --no-edit",
-    "release:major": "pnpm -r exec npm version major && commit-and-tag-version --release-as major && git add . && git commit  --amend --no-edit ",
-    "release:patch": "pnpm -r exec npm version patch && commit-and-tag-version --release-as patch && git add . && git commit  --amend --no-edit",
+    "release:minor": "pnpm -r exec npm version minor && commit-and-tag-version --release-as minor && git add . && git commit --amend --no-edit && git tag -f v$(node -p \"require('./package.json').version\") HEAD",
+    "release:major": "pnpm -r exec npm version major && commit-and-tag-version --release-as major && git add . && git commit --amend --no-edit && git tag -f v$(node -p \"require('./package.json').version\") HEAD",
+    "release:patch": "pnpm -r exec npm version patch && commit-and-tag-version --release-as patch && git add . && git commit --amend --no-edit && git tag -f v$(node -p \"require('./package.json').version\") HEAD",
     "release": "pnpm copy-readme && pnpm build && pnpm -r publish --access public --no-git-checks"
   },
   "packageManager": "pnpm@10.29.2",
