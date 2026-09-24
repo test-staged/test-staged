@@ -118,7 +118,7 @@ npx test-staged "**/*.ts" "!**/*.test.ts"
 
   // Custom test extensions (optional)
   // Defaults to [".test", ".spec"]
-  "testExtensions": [".test", ".spec", ".mytest", "E2E", "Test", "Unit"]
+  "testExtensions": [".test", ".spec", ".mytest"]
 }
 ```
 
@@ -140,9 +140,10 @@ If your test files are not being picked up, ensure your `testExtensions` are con
 
 ```json
 {
-  "testExtensions": [".test.ts", ".spec.ts", "Test.ts"]
+  "testExtensions": [".test", ".spec", "E2E", "Test", "Unit"]
 }
 ```
+> Example: For `MyFile.ts`, `MyFileE2E.ts` or `MyFileTest.ts` or `MyFileUnit.ts` will be considered test files, where the file does not have a `.type.extension`
 
 ### "Related" mode not supported
 
