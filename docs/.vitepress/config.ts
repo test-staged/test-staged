@@ -32,5 +32,13 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2025-present'
     }
+  },
+  vite: {
+    build: {
+      target: 'esnext' // or 'es2020'
+    },
+    esbuild: {
+      target: 'esnext'
+    }
   }
 })
