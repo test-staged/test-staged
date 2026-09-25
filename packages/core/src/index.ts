@@ -11,6 +11,7 @@ import { loadConfig } from './config';
 export { resolveTestFiles } from './resolve-tests';
 export interface Options {
   cwd?: string;
+  mode?: "related" | "match";
   globs?: string[];
 }
 
@@ -100,7 +101,7 @@ export async function run(options: Options = {}) {
   }
 
   // Check config mode
-  let mode: 'related' | 'match' = config.mode || 'related';
+  let mode: 'related' | 'match' = options.mode || config.mode || 'related';
   
   // Warn if 'related' mode is requested but not supported by the runner
   if (mode === 'related' && !adapter.supportsRelated) {
