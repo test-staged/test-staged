@@ -1,7 +1,7 @@
 {
   "name": "@test-staged/monorepo",
   "private": true,
-  "version": "1.1.14",
+  "version": "1.1.13",
   "description": "Test your staged files - Monorepo Root",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,18 +9,18 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "copy-readme": "rm packages/cli/README.md && cp README.md packages/cli/README.md",
-    "release:minor": "pnpm -r exec npm version minor && commit-and-tag-version --release-as minor && git add . && git commit --amend --no-edit && git tag -f v$(node -p \"require('./package.json').version\") HEAD",
-    "release:major": "pnpm -r exec npm version major && commit-and-tag-version --release-as major && git add . && git commit --amend --no-edit && git tag -f v$(node -p \"require('./package.json').version\") HEAD",
-    "release:patch": "pnpm -r exec npm version patch && commit-and-tag-version --release-as patch && git add . && git commit --amend --no-edit && git tag -f v$(node -p \"require('./package.json').version\") HEAD",
+    "release:minor": "pnpm -r exec npm version minor && commit-and-tag-version --release-as minor && git add . && git commit --amend --no-edit && git tag -f v$(node -pe \"require('./package.json').version\") HEAD",
+    "release:major": "pnpm -r exec npm version major && commit-and-tag-version --release-as major && git add . && git commit --amend --no-edit && git tag -f v$(node -pe \"require('./package.json').version\") HEAD",
+    "release:patch": "pnpm -r exec npm version patch && commit-and-tag-version --release-as patch && git add . && git commit --amend --no-edit && git tag -f v$(node -pe \"require('./package.json').version\") HEAD",
     "release": "pnpm build && pnpm -r publish --access public --no-git-checks"
   },
   "packageManager": "pnpm@10.29.2",
   "devDependencies": {
-    "@changesets/cli": "^2.31.1",
-    "@types/node": "^25.9.8",
-    "commit-and-tag-version": "^12.7.3",
+    "@changesets/cli": "^3.0.3",
+    "@types/node": "^26.6.2",
+    "commit-and-tag-version": "^13.2.1",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   },
   "repository": {
     "type": "git",

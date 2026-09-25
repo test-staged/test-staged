@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.1.14",
+  "version": "1.1.13",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +9,7 @@
     "preview": "vitepress preview"
   },
   "devDependencies": {
-    "vitepress": "^1.0.0-rc.44",
-    "vue": "^3.5.28"
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.43"
   }
 }
