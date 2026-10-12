@@ -5,6 +5,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "vitest": "^0.34.0"
+    "vitest": "^5.0.2"
   }
 }
